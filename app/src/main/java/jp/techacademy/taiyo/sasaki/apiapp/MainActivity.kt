@@ -30,8 +30,18 @@ class MainActivity : AppCompatActivity(), FragmentCallback {
         }.attach()
     }
 
-    override fun onClickItem(url: String) {
-        WebViewActivity.start(this, url)
+    override fun onClickItem(shop :Any) {
+        if (shop is Shop) {
+            WebViewActivity.start(this, shop)
+        } else if(shop is FavoriteShop) {
+            val favoriteShop = Shop(
+                couponUrls = CouponUrls(sp = shop.url, pc = ""),
+                name = shop.name,
+                id = shop.id,
+                logoImage = shop.imageUrl
+            )
+            WebViewActivity.start(this,favoriteShop)
+        }
     }
 
     override fun onAddFavorite(shop: Shop) { // Favoriteに追加するときのメソッド(Fragment -> Activity へ通知する)
@@ -67,7 +77,7 @@ class MainActivity : AppCompatActivity(), FragmentCallback {
     }
 
     companion object {
-        private const val VIEW_PAGER_POSITION_API = 0
-        private const val VIEW_PAGER_POSITION_FAVORITE = 1
+        const val VIEW_PAGER_POSITION_API = 0
+        const val VIEW_PAGER_POSITION_FAVORITE = 1
     }
 }
