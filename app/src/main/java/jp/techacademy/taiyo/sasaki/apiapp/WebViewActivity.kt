@@ -24,6 +24,8 @@ class WebViewActivity : AppCompatActivity() {
         isFavorite = FavoriteShop.findBy(shop.id) != null
         //名前をセット
         nameTextView.text = shop.name
+        //住所をセット
+        addressTextView.text = shop.address
         // Picassoライブラリを使い、imageViewにdata.logoImageのurlの画像を読み込ませる
         Picasso.get().load(shop.logoImage).into(imageView)
         // 白抜きの星マークの画像を指定
@@ -44,6 +46,7 @@ class WebViewActivity : AppCompatActivity() {
         FavoriteShop.insert(FavoriteShop().apply {
             id = shop.id
             name = shop.name
+            address = shop.address
             imageUrl = shop.logoImage
             url = if (shop.couponUrls.sp.isNotEmpty()) shop.couponUrls.sp else shop.couponUrls.pc
         })
@@ -82,6 +85,7 @@ class WebViewActivity : AppCompatActivity() {
         private const val KEY_ID = "key_id"
         private const val KEY_LOGO_IMAGE = "key_logoImage"
         private const val KEY_NAME = "key_name"
+        private const val KEY_ADDRESS = "key_address"
 
         lateinit var intent: Intent
 
@@ -97,6 +101,7 @@ class WebViewActivity : AppCompatActivity() {
             intent.putExtra(KEY_ID, item.id)
             intent.putExtra(KEY_LOGO_IMAGE, item.logoImage)
             intent.putExtra(KEY_NAME, item.name)
+            intent.putExtra(KEY_ADDRESS, item.address)
         }
 
         fun getCustomExtra() :Shop {
@@ -104,7 +109,8 @@ class WebViewActivity : AppCompatActivity() {
                 couponUrls = CouponUrls(sp = intent.getStringExtra(KEY_URL_SP).toString(),pc = intent.getStringExtra(KEY_URL_PC).toString()),
                 id = intent.getStringExtra(KEY_ID).toString(),
                 logoImage = intent.getStringExtra(KEY_LOGO_IMAGE).toString(),
-                name = intent.getStringExtra(KEY_NAME).toString()
+                name = intent.getStringExtra(KEY_NAME).toString(),
+                address = intent.getStringExtra(KEY_ADDRESS).toString()
             )
             return shop
         }

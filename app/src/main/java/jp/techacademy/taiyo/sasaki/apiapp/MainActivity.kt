@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), FragmentCallback {
             val favoriteShop = Shop(
                 couponUrls = CouponUrls(sp = shop.url, pc = ""),
                 name = shop.name,
+                address = shop.address,
                 id = shop.id,
                 logoImage = shop.imageUrl
             )
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity(), FragmentCallback {
             id = shop.id
             name = shop.name
             imageUrl = shop.logoImage
+            address = shop.address
             url = if (shop.couponUrls.sp.isNotEmpty()) shop.couponUrls.sp else shop.couponUrls.pc
         })
         (viewPagerAdapter.fragments[VIEW_PAGER_POSITION_FAVORITE] as FavoriteFragment).updateData()
